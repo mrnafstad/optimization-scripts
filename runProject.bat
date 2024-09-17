@@ -17,7 +17,7 @@ set "wtProfile=cmd"  REM Update this to match your profile
 set "wtPath=%USERPROFILE%\AppData\Local\Microsoft\WindowsApps\wt.exe"
 
 REM Prepare the command to run both git_merge and yarnCommand
-set "combinedCommands=call gitMerge.bat \"%checkoutMain%"\ & call runYarn.bat \"%env%\""
+set "combinedCommands=call gitMerge.bat \"%checkoutMain%"\ & call runYarn.bat "%env%""
 
 REM Use wt to split the current tab
 %wtPath% split-pane -p "%wtProfile%" -d "%projectPath%" cmd /k "%combinedCommands%"
