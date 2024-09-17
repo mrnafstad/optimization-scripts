@@ -1,6 +1,6 @@
 @echo off
 
-call "%~dp0Scripts\printGoodMorning.bat"
+call "%~dp0printGoodMorning.bat"
 echo.
 
 REM Start Microsoft Outlook

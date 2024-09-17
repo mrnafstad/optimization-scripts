@@ -5,8 +5,8 @@ for /f "tokens=2 delims=:" %%A in ('chcp ^| find ":"') do set "origCodePage=%%A"
 
 chcp 65001>nul
 
-REM Path to the text file with messages
-set messageFile=C:\Users\halnaf\Documents\Scripts\goodMornings.txt
+:: Set the path to goodMornings.txt relative to the batch file's directory
+set "messageFile=%~dp0goodMornings.txt"
 
 REM Count the number of lines in the message file
 for /f %%A in ('find /c /v "" ^< %messageFile%') do set numMessages=%%A

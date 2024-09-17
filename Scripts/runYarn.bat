@@ -1,6 +1,7 @@
 @echo off
 setlocal
 
+echo Yarn automation begins...
 REM Function Parameters
 set "env=%~1"
 

@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
+echo Git automation begins...
 REM Fetch the latest changes from the remote repository
 git fetch origin
 if errorlevel 1 (
