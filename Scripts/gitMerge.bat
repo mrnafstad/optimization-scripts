@@ -34,7 +34,7 @@ for /f "tokens=*" %%i in ('git branch --show-current') do set "currentBranch=%%i
 echo Current branch: %currentBranch%
 
 if "%checkOutDefault%"=="true" (
-    call checkoutDefault.bat
+    call checkoutDefault.bat "%defaultBranch%"
 )
 
 call pullBehind.bat

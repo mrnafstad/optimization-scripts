@@ -22,6 +22,8 @@ if "%pullRequired%"=="true" (
         echo Latest changes pulled.
     )
 
+) else (
+    echo Your branch is up to date with the remote branch.
 )
 
 endlocal
