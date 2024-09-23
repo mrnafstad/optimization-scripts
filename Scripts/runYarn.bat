@@ -4,7 +4,6 @@ setlocal
 echo Yarn automation begins...
 REM Function Parameters
 set "env=%~1"
-
 REM Determine the yarn command based on the environment variable
 set "yarnCommand=yarn dev"
 if not "%env%"=="" (
@@ -13,8 +12,8 @@ if not "%env%"=="" (
 
 REM Install dependencies and run the development server sequentially
 yarn install && (
-    
     REM Run the development server
+    echo Running "%yarnCommand%"...
     %yarnCommand%
 ) || (
     exit /b 0
