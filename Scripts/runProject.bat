@@ -17,18 +17,19 @@ set "runYarnFlag="
 set "wslFlag="
 set "dockerFlag="
 
-REM Determine what var1, var2, and var3 are
-for %%V in (%*) do (
-    if "%%~V"=="m" (
+
+for %%V in (3 4 5 6 7) do (
+    call set "param=%%%V%%"
+    if "!param!"=="m" (
         set "checkoutMain=m"
-    ) else if "%%~V"=="o" (
+    ) else if "!param!"=="o" (
         set "runYarnFlag=o"
-    ) else if "%%~V"=="w" (
+    ) else if "!param!"=="w" (
         set "wslFlag=w"
-    ) else if "%%V"=="d" (
+    ) else if "!param!"=="d" (
         set "dockerFlag=d"
     ) else (
-        set "env=%%~V"
+        set "env=%param%"
     )
 )
 
@@ -48,13 +49,14 @@ if "%wslFlag%"=="w" (
 )
 
 REM Prepare the command to run git_merge
-set "combinedCommands=call gitMerge.bat \"%checkoutMain%\""
+set "combinedCommands=call gitMerge.bat %checkoutMain%"
 
 REM Conditionally add runYarn if runYarnFlag is not "o"
 if not "%runYarnFlag%"=="o" (
-    set "combinedCommands=%combinedCommands% & call runYarn.bat \"%env%\""
+    set "combinedCommands=%combinedCommands% & call runYarn.bat %env%"
 )
 
+echo %wtPath% split-pane -p "%wtProfile%" -d "%projectPath%" cmd /k "%combinedCommands%"
 REM Use wt to split the current tab
 %wtPath% split-pane -p "%wtProfile%" -d "%projectPath%" cmd /k "%combinedCommands%"
 
