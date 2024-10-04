@@ -41,14 +41,10 @@ for /L %%i in (1,1,%i%) do (
         set "wslFlag=w"
     ) else if "!param!"=="d" (
         set "dockerFlag=d"
-    ) else (
-        set "env=%param%"
+    ) else if not "!param!"=="" (
+        set "env=!param!"
     )
 )
-
-
-
-
 
 REM Set variables
 set "wtProfile=cmd"  REM Update this to match your profile
@@ -71,7 +67,6 @@ if not "%runYarnFlag%"=="o" (
     set "combinedCommands=%combinedCommands% & call runYarn.bat %env%"
 )
 
-echo %wtPath% split-pane -p "%wtProfile%" -d "%projectPath%" cmd /k "%combinedCommands%"
 REM Use wt to split the current tab
 %wtPath% split-pane -p "%wtProfile%" -d "%projectPath%" cmd /k "%combinedCommands%"
 
