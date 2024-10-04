@@ -33,7 +33,6 @@ goto loop
 REM Access array elements
 for /L %%i in (1,1,%i%) do (
     set "param=!array[%%i]!"
-    echo !param!
     if "!param!"=="m" (
         set "checkoutMain=m"
     ) else if "!param!"=="o" (
