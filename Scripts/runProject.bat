@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
 REM Function Parameters
 set "projectPath=%~1"
@@ -17,9 +17,23 @@ set "runYarnFlag="
 set "wslFlag="
 set "dockerFlag="
 
+shift
+shift
+REM Define an array with command-line arguments
+set i=1
+:loop
+if %i% GTR 5 goto after_args
+set "array[%i%]=%~1"
+set /a i+=1
+shift
+goto loop
 
-for %%V in (3 4 5 6 7) do (
-    call set "param=%%%V%%"
+:after_args
+
+REM Access array elements
+for /L %%i in (1,1,%i%) do (
+    set "param=!array[%%i]!"
+    echo !param!
     if "!param!"=="m" (
         set "checkoutMain=m"
     ) else if "!param!"=="o" (
@@ -32,6 +46,8 @@ for %%V in (3 4 5 6 7) do (
         set "env=%param%"
     )
 )
+
+
 
 
 
