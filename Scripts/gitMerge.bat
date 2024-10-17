@@ -2,6 +2,14 @@
 setlocal enabledelayedexpansion
 
 echo Git automation begins...
+
+REM Check for uncommitted changes
+call checkAndCommit.bat
+if errorlevel 1 (
+    echo Commit process was unsuccessful. Exiting.
+    exit /b 1
+)
+
 REM Fetch the latest changes from the remote repository
 git fetch origin
 if errorlevel 1 (
