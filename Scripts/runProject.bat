@@ -60,7 +60,7 @@ if "%wslFlag%"=="w" (
 )
 
 REM Prepare the command to run git_merge
-set "combinedCommands=call gitMerge.bat %checkoutMain%"
+set "combinedCommands=call gitMerge.bat %checkoutMain% & cd %projectPath%"
 
 REM Conditionally add runYarn if runYarnFlag is not "o"
 if not "%runYarnFlag%"=="o" (
@@ -68,7 +68,7 @@ if not "%runYarnFlag%"=="o" (
 )
 
 REM Use wt to split the current tab
-%wtPath% split-pane -p "%wtProfile%" -d "%projectPath%" cmd /k "%combinedCommands%"
+%wtPath% split-pane -p "%wtProfile%" -d "%codePath%" cmd /k "%combinedCommands%"
 
 REM Open VS Code in the project folder
 code %codePath%

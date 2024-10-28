@@ -12,7 +12,6 @@ for /f "tokens=*" %%i in ('git status -uno') do (
 
 REM If pull is required, pull the latest changes
 if "%pullRequired%"=="true" (
-    echo Your branch is behind the remote branch.
     echo Pulling the latest changes from origin...
     git pull origin %currentBranch%
     if errorlevel 1 (

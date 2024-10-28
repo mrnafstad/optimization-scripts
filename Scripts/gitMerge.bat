@@ -3,19 +3,20 @@ setlocal enabledelayedexpansion
 
 echo Git automation begins...
 
-REM Check for uncommitted changes
-call checkAndCommit.bat
-if errorlevel 1 (
-    echo Commit process was unsuccessful. Exiting.
-    exit /b 1
-)
-
 REM Fetch the latest changes from the remote repository
-git fetch origin
+git fetch origin --update-head-ok
 if errorlevel 1 (
     echo Failed to fetch changes. Ensure git is installed and configured properly.
     exit /b 1
 )
+
+REM Check for uncommitted changes
+call checkAndCommit.bat
+if errorlevel 1 (
+    echo Commit process was unsuccessful. Proceeding...
+)
+
+
 
 REM Check if a flag for checking out the default branch is provided
 if "%~1"=="m" (
@@ -45,11 +46,11 @@ if "%checkOutDefault%"=="true" (
     call checkoutDefault.bat "%defaultBranch%"
 )
 
-call pullBehind.bat
 
 if "%defaultBranch%"=="%currentBranch%" (
     echo Currently on %defaultBranch%, nothing to merge.
     exit /b 0
 ) 
+call pullBehind.bat
 
 call mergeBehind.bat "%defaultBranch%" "%currentBranch%"
