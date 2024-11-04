@@ -1,9 +1,9 @@
 Repository: optimization-scripts
-Commit Hash: 4ff4b8bde9c09857ed8871068116cbe965a23760
-Commit Message: add git ignore
-Commit Date: 2024-11-04 09:48:24 +0100
+Commit Hash: 553238a95476fff3ed6048120e725d32f676b9f1
+Commit Message: fix ignore
+Commit Date: 2024-11-04 09:50:06 +0100
 Changed Files: 
     .git-ignore 
-    Scripts/getLastCommit.bat 
+    .gitignore 
     Scripts/git_last_commit_info.txt 
     Scripts/saveLastCommit.bat 
