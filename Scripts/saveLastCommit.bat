@@ -37,6 +37,4 @@ for /f "tokens=*" %%i in ('git diff-tree --no-commit-id --name-only -r %LAST_COM
 :: Clean up temporary files
 del temp_commit_hash.txt temp_commit_msg.txt temp_commit_date.txt temp_diff_files_formatted.txt
 
-echo Commit information saved successfully to %OUTPUT_FILE%.
-
 endlocal

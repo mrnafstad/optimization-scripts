@@ -1,10 +1,9 @@
 Repository: optimization-scripts
-Commit Hash: bb06667f8327045e8bf98bb16a895b02628750a2
-Commit Message: add last commit info
-Commit Date: 2024-11-04 09:31:06 +0100
+Commit Hash: 4ff4b8bde9c09857ed8871068116cbe965a23760
+Commit Message: add git ignore
+Commit Date: 2024-11-04 09:48:24 +0100
 Changed Files: 
+    .git-ignore 
     Scripts/getLastCommit.bat 
-    Scripts/gitMerge.bat 
-    Scripts/mornin.bat 
-    Scripts/pushCom.bat 
+    Scripts/git_last_commit_info.txt 
     Scripts/saveLastCommit.bat 
