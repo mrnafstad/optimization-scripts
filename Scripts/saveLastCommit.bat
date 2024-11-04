@@ -21,9 +21,12 @@ set /p COMMIT_DATE=<temp_commit_date.txt
 
 :: Step 5: Get the list of diffed files and format with indentation
 echo Changed Files: > temp_diff_files_formatted.txt
-for /f "tokens=*" %%i in ('git diff-tree --no-commit-id --name-only -r %LAST_COMMIT%') do (
-    echo     %%i >> temp_diff_files_formatted.txt
-)
+for /f "tokens=1,2*" %%i in ('git diff-tree --no-commit-id --name-status -r %LAST_COMMIT%') do (
+    set "FILE_STATUS=%%i"
+    set "FILE_NAME=%%j"
+    
+    :: Output the file name with its status description, indented
+    echo     !FILE_NAME! - !FILE_STATUS! >> temp_diff_files_formatted.txt
 
 :: Step 6: Save the information in a formatted way to the output file
 (
