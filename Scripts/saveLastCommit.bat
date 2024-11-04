@@ -1,36 +1,42 @@
 @echo off
 setlocal enabledelayedexpansion
 
+:: Define the output file path in the same directory as the script
+set OUTPUT_FILE=%~dp0git_last_commit_info.txt
+
 :: Step 1: Get the repository name (the current folder name)
 for %%i in (.) do set REPO_NAME=%%~nxi
 
 :: Step 2: Get the last commit hash
-for /f %%i in ('git log -1 --pretty=format:"%%H"') do set LAST_COMMIT=%%i
+git log -1 --pretty=format:"%%H" > temp_commit_hash.txt
+set /p LAST_COMMIT=<temp_commit_hash.txt
 
 :: Step 3: Get the commit message
-for /f "tokens=*" %%i in ('git log -1 --pretty=format:"%%s"') do set COMMIT_MESSAGE=%%i
+git log -1 --pretty=format:"%%s" > temp_commit_msg.txt
+set /p COMMIT_MESSAGE=<temp_commit_msg.txt
 
 :: Step 4: Get the commit date
-for /f "tokens=*" %%i in ('git log -1 --pretty=format:"%%ci"') do set COMMIT_DATE=%%i
+git log -1 --pretty=format:"%%ci" > temp_commit_date.txt
+set /p COMMIT_DATE=<temp_commit_date.txt
 
-:: Step 5: Get the list of diffed files
-set DIFF_FILES=
+:: Step 5: Get the list of diffed files and format with indentation
+echo Changed Files: > temp_diff_files_formatted.txt
 for /f "tokens=*" %%i in ('git diff-tree --no-commit-id --name-only -r %LAST_COMMIT%') do (
-    set DIFF_FILES=!DIFF_FILES!%%i, 
+    echo     %%i >> temp_diff_files_formatted.txt
 )
 
-:: Remove trailing comma and space from DIFF_FILES
-set DIFF_FILES=%DIFF_FILES:~0,-2%
-
-:: Step 6: Save the information in a formatted way to a static file
+:: Step 6: Save the information in a formatted way to the output file
 (
     echo Repository: %REPO_NAME%
     echo Commit Hash: %LAST_COMMIT%
     echo Commit Message: %COMMIT_MESSAGE%
     echo Commit Date: %COMMIT_DATE%
-    echo Changed Files: %DIFF_FILES%
-) > C:\git_last_commit_info.txt
+    type temp_diff_files_formatted.txt
+) > "%OUTPUT_FILE%"
 
-echo Commit information saved successfully.
+:: Clean up temporary files
+del temp_commit_hash.txt temp_commit_msg.txt temp_commit_date.txt temp_diff_files_formatted.txt
+
+echo Commit information saved successfully to %OUTPUT_FILE%.
 
 endlocal
