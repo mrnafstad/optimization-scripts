@@ -20,4 +20,5 @@ if %errorlevel% neq 0 (
     git push
 )
 
+call saveLastCommit.bat
 endlocal

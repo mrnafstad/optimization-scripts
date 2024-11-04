@@ -11,3 +11,5 @@ start "" "%LOCALAPPDATA%\slack\slack.exe"
 
 REM Start Google Chrome
 start "" "%ProgramFiles%\Google\Chrome\Application\chrome.exe"
+
+call getLastCommit.bat

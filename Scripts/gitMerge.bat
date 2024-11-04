@@ -49,6 +49,8 @@ if "%checkOutDefault%"=="true" (
 
 if "%defaultBranch%"=="%currentBranch%" (
     echo Currently on %defaultBranch%, nothing to merge.
+    echo Pulling latest changes from %defaultBranch%...
+    git pull
     exit /b 0
 ) 
 call pullBehind.bat
