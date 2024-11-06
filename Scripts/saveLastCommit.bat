@@ -27,6 +27,7 @@ for /f "tokens=1,2*" %%i in ('git diff-tree --no-commit-id --name-status -r %LAS
     
     :: Output the file name with its status description, indented
     echo !FILE_STATUS!    !FILE_NAME! >> temp_diff_files_formatted.txt
+)
 
 :: Step 6: Save the information in a formatted way to the output file
 (
