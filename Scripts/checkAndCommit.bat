@@ -27,15 +27,20 @@ if errorlevel 1 (
     ) else (
         echo You need to commit and push your changes before proceeding. 
         echo Review the changes and provide a commit message:
-        set /p commitMessage="> "
-        
-        REM If the user didn't provide a commit message, set a default one
-        if "!commitMessage!"=="" (
-            set "commitMessage=Quick commit"
-        )
-        echo Commit message:  !commitMessage!
+        where cz >nul 2>&1
+        if %errorlevel% equ 0 (
+            call pushcom.bat
+        ) else (
+            set /p commitMessage="> "
+            
+            REM If the user didn't provide a commit message, set a default one
+            if "!commitMessage!"=="" (
+                set "commitMessage=Quick commit"
+            )
+            echo Commit message:  !commitMessage!
 
-        call pushcom.bat !commitMessage!
+            call pushcom.bat !commitMessage!
+        )
 
         if errorlevel 1 (
             echo Commit and push failed. Aborting operation.
