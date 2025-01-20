@@ -34,7 +34,6 @@ for /f "tokens=1,2*" %%i in ('git diff-tree --no-commit-id --name-status -r %LAS
     REM Output the file name with its status description, indented
     echo !FILE_STATUS!    !FILE_NAME! >> "%TEMP_DIFF_FILES%"
 )
-echo dug
 REM Step 6: Save the information in a formatted way to the output file
 (
     echo Repository: !REPO_NAME!
@@ -43,7 +42,6 @@ REM Step 6: Save the information in a formatted way to the output file
     echo Commit Date: !COMMIT_DATE!
     type "!TEMP_DIFF_FILES!"
 ) > "%OUTPUT_FILE%"
-echo dug2
 
 REM Step 7: Clean up temporary files
 if exist "%TEMP_COMMIT_HASH%" del "%TEMP_COMMIT_HASH%"

@@ -10,6 +10,13 @@ if errorlevel 1 (
     exit /b 1
 )
 
+REM Prune remote-tracking branches that no longer exist
+git fetch --prune
+if errorlevel 1 (
+    echo Failed to prune branches. Ensure git is installed and configured properly.
+    exit /b 1
+)
+
 REM Check for uncommitted changes
 call checkAndCommit.bat
 if errorlevel 1 (

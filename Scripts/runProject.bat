@@ -68,7 +68,7 @@ if not "%runYarnFlag%"=="o" (
 )
 
 REM Use wt to split the current tab
-%wtPath% split-pane -p "%wtProfile%" -d "%codePath%" cmd /k "%combinedCommands%"
+%wtPath% split-pane -p "%wtProfile%" -d "%codePath%" cmd /k "%combinedCommands% & cmd"
 
 REM Open VS Code in the project folder
 code %codePath%

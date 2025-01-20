@@ -10,7 +10,7 @@ where cz >nul 2>&1
 if %errorlevel% equ 0 (
     REM Use Commitizen for commit if available
     echo Commitizen is available. Using Commitizen to create the commit.
-    git cz
+    git cz 
 ) else (
     REM Commit with the message passed as an argument
     echo Commitizen is not available. Falling back to manual commit.
