@@ -1,8 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM Define the output file path in the same directory as the script
-set OUTPUT_FILE=%~dp0git_last_commit_info.txt
+REM Define the output file path (HTML content only)
+set OUTPUT_FILE=%~dp0git_last_commit_info.html
 
 REM Define paths for temporary files
 set TEMP_COMMIT_HASH=%~dp0temp_commit_hash.txt
@@ -25,28 +25,39 @@ REM Step 4: Get the commit date
 git log -1 --pretty=format:"%%ci" > "%TEMP_COMMIT_DATE%"
 set /p COMMIT_DATE=<"%TEMP_COMMIT_DATE%"
 
-REM Step 5: Get the list of diffed files and format with indentation
-echo Changed Files: > "%TEMP_DIFF_FILES%"
+REM Step 5: Get the list of changed files
+(
+    echo Changed Files:
+    git diff-tree --no-commit-id --name-status -r %LAST_COMMIT%
+) > "%TEMP_DIFF_FILES%"
+
+REM Step 6: Write HTML content (no <html>, <body>, etc.)
+(
+    echo ^<div class="commit-info"^>
+
+    echo ^<div class="commit-row"^>^<h5^>Repository:^</h5^> ^<span^>!REPO_NAME!^</span^>^</div^>
+    echo ^<div class="commit-row"^>^<h5^>Commit Hash:^</h5^> ^<span^>!LAST_COMMIT!^</span^>^</div^>
+    echo ^<div class="commit-row"^>^<h5^>Commit Message:^</h5^> ^<span^>!COMMIT_MESSAGE!^</span^>^</div^>
+    echo ^<div class="commit-row"^>^<h5^>Commit Date:^</h5^> ^<span^>!COMMIT_DATE!^</span^>^</div^>
+
+    echo ^<div class="commit-row"^>^<h5^>Changed Files:^</h5^>^</div^>
+    echo ^<div class="commit-files"^>
+) > "%OUTPUT_FILE%"
+
+REM Append file changes to the HTML output
 for /f "tokens=1,2*" %%i in ('git diff-tree --no-commit-id --name-status -r %LAST_COMMIT%') do (
     set "FILE_STATUS=%%i"
     set "FILE_NAME=%%j"
-    
-    REM Output the file name with its status description, indented
-    echo !FILE_STATUS!    !FILE_NAME! >> "%TEMP_DIFF_FILES%"
+    echo ^<div class="file-row"^>^<span^>!FILE_STATUS!^</span^> ^<span^>!FILE_NAME!^</span^>^</div^> >> "%OUTPUT_FILE%"
 )
-REM Step 6: Save the information in a formatted way to the output file
+
+REM Close HTML tags
 (
-    echo Repository: !REPO_NAME!
-    echo Commit Hash: !LAST_COMMIT!
-    echo Commit Message: !COMMIT_MESSAGE!
-    echo Commit Date: !COMMIT_DATE!
-    type "!TEMP_DIFF_FILES!"
-) > "%OUTPUT_FILE%"
+    echo ^</div^>
+    echo ^</div^>
+) >> "%OUTPUT_FILE%"
 
 REM Step 7: Clean up temporary files
-if exist "%TEMP_COMMIT_HASH%" del "%TEMP_COMMIT_HASH%"
-if exist "%TEMP_COMMIT_MSG%" del "%TEMP_COMMIT_MSG%"
-if exist "%TEMP_COMMIT_DATE%" del "%TEMP_COMMIT_DATE%"
-if exist "%TEMP_DIFF_FILES%" del "%TEMP_DIFF_FILES%"
+del "%TEMP_COMMIT_HASH%" "%TEMP_COMMIT_MSG%" "%TEMP_COMMIT_DATE%" "%TEMP_DIFF_FILES%"
 
 endlocal

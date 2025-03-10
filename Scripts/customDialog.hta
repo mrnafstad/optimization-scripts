@@ -1,0 +1,25 @@
+<html><head>
+<title>Morning! Put on that smile and get ready to rock!</title>
+<style>
+body { font-family: Arial, sans-serif; font-size: 18px; text-align: center; height: 100vh; margin: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+h1 { font-size: 28px; margin-bottom: 10px; }
+p { font-size: 20px; max-width: 80%; }
+.buttons { display: flex; gap: 15px; margin-top: 20px; }
+button { font-size: 18px; padding: 10px 20px; cursor: pointer; }
+</style>
+</head><body>
+<h1 id='dialogTitle'>Morning! Put on that smile and get ready to rock!</h1>
+<p id='dialogContent'>===============================<br>  Last Commit Information<br>===============================<br>Repository: attensi-manager-view<br>Commit Hash: 3bc6bb66043779f322acdf1908d85222c7187804<br>Commit Message: feat: ensure sentry url is exposed and sentry-cli is installed<br>Commit Date: 2025-03-06 14:22:21 +0100<br>Changed Files: <br>M    .github/workflows/docker_build.yml <br>===============================<br></p>
+<div class='buttons'>
+<button onclick='runYes()'>Yes</button>
+<button onclick='window.close()'>No</button>
+</div>
+<script>
+function runYes() {
+  var shell = new ActiveXObject('WScript.Shell');
+  shell.Run('C:\\Users\\halnaf\\Documents\\optimization-scripts\\Scripts\\startApps.bat');
+  window.close();
+}
+window.onload = function() { window.resizeTo(500, 300); };
+</script>
+</body></html>

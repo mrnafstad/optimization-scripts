@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <script>
+        function getQueryParams() {
+            var query = window.location.search.substring(1);
+            var params = {};
+            query.split("&").forEach(function(part) {
+                var pair = part.split("=");
+                if (pair.length === 2) {  // Ensure both key and value exist
+                    var key = decodeURIComponent(pair[0]);
+                    var value = decodeURIComponent(pair[1] || ""); // Default empty string if undefined
+                    params[key] = value.replace(/\+/g, " "); // Replace '+' with space
+                }
+            });
+            return params;
+        }
+
+        function initialize() {
+            try {
+
+                var params = getQueryParams();
+                document.title = params["title"] || "Notification";
+                document.getElementById("dialogTitle").innerText = params["title"] || "Message";
+                document.getElementById("dialogContent").innerHTML = params["content"] || "No content provided.";
+                
+                if (params["yesAction"]) {
+                    document.getElementById("yesButton").onclick = function() {
+                        // var shell = new ActiveXObject("WScript.Shell");
+                        // shell.Run(params["yesAction"]);
+                        window.close();
+                    };
+                } else {
+                    document.getElementById("yesButton").style.display = "none";
+                }
+            } catch (error) {
+                alert("An error occurred: " + error.message);
+            }
+        }
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 18px; text-align: center; height: 100vh; margin: 0;
+               display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        h1 { font-size: 28px; margin-bottom: 10px; }
+        h5 { font-size: 20px; margin: 10px 0; }
+        p { font-size: 15px; max-width: 80%; padding: 10px; }
+        .buttons { display: flex; gap: 15px; margin-top: 20px; }
+        button { font-size: 18px; padding: 10px 20px; cursor: pointer; }
+        echo .commit-info { display: flex; flex-direction: column; gap: 10px; max-width: 600px; }
+        .commit-row { display: flex; justify-content: space-between; padding: 5px 10px; border-bottom: 1px solid #ddd; }
+        h5 { margin: 0; font-weight: bold; }
+        .commit-files { display: flex; flex-direction: column; gap: 5px; }
+        .file-row { display: flex; justify-content: space-between; padding-left: 20px; }
+    </style>
+</head>
+<body onload="initialize()">
+    <h1 id="dialogTitle">Message</h1>
+    <p id="dialogContent">This is a modern HTML dialog using JavaScript!</p>
+    <div class="buttons">
+        <button id="yesButton">Start slack and outlook</button>
+        <button onclick="window.close()">Close</button>
+    </div>
+</body>
+</html>

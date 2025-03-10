@@ -14,8 +14,15 @@ if %errorlevel% equ 0 (
 ) else (
     REM Commit with the message passed as an argument
     echo Commitizen is not available. Falling back to manual commit.
-    echo git commit -m "%*"
-    git commit -m "%*"
+    set /p commitMessage="> "
+            
+    REM If the user didn't provide a commit message, set a default one
+    if "!commitMessage!"=="" (
+        set "commitMessage=Quick commit"
+    )
+    echo Commit message:  !commitMessage!
+    echo git commit -m "!commitMessage!"
+    git commit -m "!commitMessage!"
 )
 
 REM Check if the current branch has an upstream branch
@@ -28,6 +35,6 @@ if %errorlevel% neq 0 (
     echo git push
     git push
 )
-
+echo sda
 call saveLastCommit.bat
 endlocal
