@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM Define the output file path (HTML content only)
-set OUTPUT_FILE=%~dp0git_last_commit_info.html
+set OUTPUT_FILE=%~dp0git_last_commit_info.txt
 
 REM Define paths for temporary files
 set TEMP_COMMIT_HASH=%~dp0temp_commit_hash.txt

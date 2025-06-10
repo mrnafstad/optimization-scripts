@@ -4,7 +4,11 @@ Set objFSO = CreateObject("Scripting.FileSystemObject")
 
 ' === Step 1: Get Title from printGoodMorning.bat ===
 Dim objExec
+objShell.Exec("cmd /c C:\Users\halnaf\Documents\optimization-scripts\Scripts\startApps.bat")
+objShell.Run "cmd /c timeout /t 1 /nobreak", 0, True
 Set objExec = objShell.Exec("cmd /c C:\Users\halnaf\Documents\optimization-scripts\Scripts\printGoodMorning.bat")
+
+
 
 ' Read first line as the title
 If Not objExec.StdOut.AtEndOfStream Then
@@ -48,6 +52,8 @@ Set objShell = Nothing
 Function EncodeParam(param)
     param = Replace(param, "%", "%25")  ' Encode %
     param = Replace(param, "'", "%27")  ' Encode '
+    param = Replace(param, "’", "%27")  ' Encode ’
+    param = Replace(param, "-", "%2D")  ' Encode -
     param = Replace(param, " ", "%20")  ' Encode spaces
     param = Replace(param, "&", "%26")  ' Encode &
     param = Replace(param, "=", "%3D")  ' Encode =
